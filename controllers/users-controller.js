@@ -15,7 +15,18 @@ const getUsers = (req, res, next) => {
   res.status(200).json({ users: DUMMY_USERS });
 };
 
-const signup = (req, res, next) => {};
+const signup = (req, res, next) => {
+  const { name, email, password } = req.body;
+  const createdUser = {
+    id: uuid(),
+    name,
+    email,
+    password,
+  };
+
+  DUMMY_USERS.push(createdUser);
+  res.status(201).json({ user: createdUser });
+};
 
 const login = (req, res, next) => {};
 
