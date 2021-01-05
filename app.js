@@ -2,12 +2,22 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const placesRoutes = require("./routes/places-routes");
+const HttpError = require("./models/http-error");
 
 const app = express();
 
 app.use(bodyParser.json());
 
 app.use("/api/places", placesRoutes);
+
+app.get("/", (req, res, next) => {
+  res.send("<h1>Welcome to the Location Tracker API</>");
+});
+
+app.use((req, res, next) => {
+  const error = new HttpError("Could not find this route.", 404);
+  throw error;
+});
 
 app.use((error, req, res, next) => {
   if (res.headerSent) {
@@ -17,10 +27,6 @@ app.use((error, req, res, next) => {
   res.json({
     message: error.message || "Something went wrong! Try again later.",
   });
-});
-
-app.get("/", (req, res, next) => {
-  res.send("<h1>Welcome to the Location Tracker API</>");
 });
 
 app.listen(5000);
