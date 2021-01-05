@@ -21,23 +21,27 @@ router.get("/:pid", (req, res, next) => {
   const place = DUMMY_PLACES.find((p) => {
     return p.id === placeId;
   });
-  if (place) {
-    res.json({ place });
+  if (!place) {
+    res
+      .status(404)
+      .json({ message: "Could not find a place for the provided id." });
   } else {
-    res.send("<h2>No place found!</h2>");
+    res.status(200).json({ place });
   }
 });
 
-router.get('/user/:uid', (req, res, next) => {
-    const userId = req.params.uid;
-    const place = DUMMY_PLACES.find((p) => {
-        return p.creator === userId
-    })
-    if (place) {
-        res.json({ place });
-      } else {
-        res.send("<h2>No user found!</h2>");
-      }
-})
+router.get("/user/:uid", (req, res, next) => {
+  const userId = req.params.uid;
+  const place = DUMMY_PLACES.find((p) => {
+    return p.creator === userId;
+  });
+  if (!place) {
+    res
+      .status(404)
+      .json({ message: "Could not find a user with the provided id." });
+  } else {
+    res.status(200).json({ place });
+  }
+});
 
 module.exports = router;
