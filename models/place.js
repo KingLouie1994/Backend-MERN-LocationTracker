@@ -10,10 +10,6 @@ const placeSchema = new Schema({
     type: String,
     required: true,
   },
-  image: {
-    type: String,
-    required: true,
-  },
   address: {
     type: String,
     required: true,
@@ -21,6 +17,10 @@ const placeSchema = new Schema({
   location: {
     lat: { type: Number, required: true },
     lng: { type: Number, required: true },
+  },
+  image: {
+    type: String,
+    required: true,
   },
   creator: {
     type: String,
