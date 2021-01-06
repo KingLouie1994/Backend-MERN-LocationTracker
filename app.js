@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 
 const placesRoutes = require("./routes/places-routes");
 const usersRoutes = require("./routes/users-routes");
@@ -31,4 +32,17 @@ app.use((error, req, res, next) => {
   });
 });
 
-app.listen(5000);
+mongoose
+  .connect(
+    `mongodb+srv://MERN-Course-Academind:MERN-Course-Academind@mern-course-academind.tyqr4.mongodb.net/places?retryWrites=true&w=majority`,
+    {
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+    }
+  )
+  .then(() => {
+    app.listen(8000);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
