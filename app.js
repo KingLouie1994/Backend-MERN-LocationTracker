@@ -36,6 +36,7 @@ mongoose
   .connect(
     `mongodb+srv://MERN-Course-Academind:MERN-Course-Academind@mern-course-academind.tyqr4.mongodb.net/location_tracker?retryWrites=true&w=majority`,
     {
+      useCreateIndex: true,
       useUnifiedTopology: true,
       useNewUrlParser: true,
     }
