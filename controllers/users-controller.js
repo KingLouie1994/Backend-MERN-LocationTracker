@@ -1,4 +1,3 @@
-const { v4: uuid } = require("uuid");
 const { validationResult } = require("express-validator");
 
 const HttpError = require("../models/http-error");
@@ -25,7 +24,7 @@ const signup = async (req, res, next) => {
     return next(new HttpError("Invalid input passed, please check it", 422));
   }
 
-  const { name, email, password, places } = req.body;
+  const { name, email, password } = req.body;
 
   let existingUser;
   try {
@@ -51,7 +50,7 @@ const signup = async (req, res, next) => {
     email,
     image: "https://live.staticflickr.com/7631/26849088292_36fc52ee90_b.jpg",
     password, // encryption of password will follow
-    places,
+    places: [],
   });
 
   try {
