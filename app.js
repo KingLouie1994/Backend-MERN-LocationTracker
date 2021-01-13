@@ -53,6 +53,7 @@ mongoose
   )
   .then(() => {
     app.listen(8000);
+    console.log("Api is running on port 8000");
   })
   .catch((err) => {
     console.log(err);
