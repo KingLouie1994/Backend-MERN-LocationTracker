@@ -182,7 +182,7 @@ const deletePlace = async (req, res, next) => {
     return next(error);
   }
 
-  if (deletedPlace.creator.id !== req.userData.id) {
+  if (deletedPlace.creator.id !== req.userData.userId) {
     const error = new HttpError(`You're not the creator of this place.`, 401);
     return next(error);
   }

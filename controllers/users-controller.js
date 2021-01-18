@@ -12,7 +12,7 @@ const getUsers = async (req, res, next) => {
     users = await User.find({}, "-password");
   } catch (err) {
     const error = new HttpError(
-      "Fetching users failed, please try again later",
+      "Fetching users failed, please try again later.",
       500
     );
     return next(error);
@@ -23,7 +23,9 @@ const getUsers = async (req, res, next) => {
 const signup = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return next(new HttpError("Invalid input passed, please check it", 422));
+    return next(
+      new HttpError("Invalid inputs passed, please check your data.", 422)
+    );
   }
 
   const { name, email, password } = req.body;
@@ -41,17 +43,20 @@ const signup = async (req, res, next) => {
 
   if (existingUser) {
     const error = new HttpError(
-      "User already exists, please login instead",
+      "User exists already, please login instead.",
       422
     );
     return next(error);
   }
 
-  let hashedpassword;
+  let hashedPassword;
   try {
-    hashedpassword = await bcrypt.hash(password, 12);
+    hashedPassword = await bcrypt.hash(password, 12);
   } catch (err) {
-    const error = new HttpError("Could not hash password!", 500);
+    const error = new HttpError(
+      "Could not create user, please try again.",
+      500
+    );
     return next(error);
   }
 
@@ -59,14 +64,17 @@ const signup = async (req, res, next) => {
     name,
     email,
     image: req.file.path,
-    hashedpassword,
+    password: hashedPassword,
     places: [],
   });
 
   try {
     await createdUser.save();
   } catch (err) {
-    const error = new HttpError(`Creating user failed, please try again.`, 500);
+    const error = new HttpError(
+      "Signing up failed, please try again later.",
+      500
+    );
     return next(error);
   }
 
@@ -106,7 +114,7 @@ const login = async (req, res, next) => {
 
   if (!existingUser) {
     const error = new HttpError(
-      "Invalid credentials, could not log you in",
+      "Invalid credentials, could not log you in.",
       403
     );
     return next(error);
@@ -117,7 +125,7 @@ const login = async (req, res, next) => {
     isValidPassword = await bcrypt.compare(password, existingUser.password);
   } catch (err) {
     const error = new HttpError(
-      "Could not log you in, please check credentials and try again",
+      "Could not log you in, please check your credentials and try again.",
       500
     );
     return next(error);
@@ -125,7 +133,7 @@ const login = async (req, res, next) => {
 
   if (!isValidPassword) {
     const error = new HttpError(
-      "Invalid credentials, could not log you in",
+      "Invalid credentials, could not log you in.",
       403
     );
     return next(error);
