@@ -8,6 +8,7 @@ const getCoordsForAddress = require("../util/location");
 
 const Place = require("../models/place");
 const User = require("../models/user");
+const { request } = require("http");
 
 const getPlaceByID = async (req, res, next) => {
   const placeId = req.params.pid;
@@ -141,6 +142,11 @@ const updatePlace = async (req, res, next) => {
     return next(error);
   }
 
+  if (updatedPlace.creator.toString() !== req.userData.userId) {
+    const error = new HttpError(`You're not the creator of this place.`, 401);
+    return next(error);
+  }
+
   updatedPlace.title = title;
   updatedPlace.description = description;
 
@@ -173,6 +179,11 @@ const deletePlace = async (req, res, next) => {
 
   if (!deletedPlace) {
     const error = new HttpError("Could not find place for this id.", 404);
+    return next(error);
+  }
+
+  if (deletedPlace.creator.id !== req.userData.id) {
+    const error = new HttpError(`You're not the creator of this place.`, 401);
     return next(error);
   }
 
