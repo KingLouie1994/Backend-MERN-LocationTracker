@@ -54,7 +54,7 @@ app.use((error, req, res, next) => {
 
 mongoose
   .connect(
-    `mongodb+srv://MERN-Course-Academind:MERN-Course-Academind@mern-course-academind.tyqr4.mongodb.net/location_tracker?retryWrites=true&w=majority`,
+    `mongodb+srv://${process.env.DB_USER}:${process.env.PASSWORD}@mern-course-academind.tyqr4.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`,
     {
       useCreateIndex: true,
       useUnifiedTopology: true,
