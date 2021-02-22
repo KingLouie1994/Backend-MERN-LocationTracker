@@ -6,6 +6,9 @@ const HttpError = require("../models/http-error");
 
 const User = require("../models/user");
 
+const dotenv = require("dotenv");
+dotenv.config();
+
 const getUsers = async (req, res, next) => {
   let users;
   try {
