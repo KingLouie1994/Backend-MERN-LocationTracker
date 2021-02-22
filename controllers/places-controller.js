@@ -102,8 +102,6 @@ const createPlace = async (req, res, next) => {
     return next(error);
   }
 
-  console.log(user);
-
   try {
     const sess = await mongoose.startSession();
     sess.startTransaction();
