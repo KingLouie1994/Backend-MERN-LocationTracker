@@ -14,7 +14,7 @@ const app = express();
 
 dotenv.config();
 
-app.use(bodyParser.json());
+app.use(express.json());
 
 app.use("/uploads/images", express.static(path.join("uploads", "images")));
 
